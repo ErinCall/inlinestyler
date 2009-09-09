@@ -11,13 +11,14 @@ class InlineStyler(object):
         style_blocks = self._soup.findAll('style')
         css_list = []
         for style_block in style_blocks:
-            style_innards.append(style_block.contents[0])
+            css_list.append(style_block.contents[0])
             style_block.extract()
         return css_list
     
     def _load_sheet(self, css_list):
         parser = cssutils.CSSParser()
         self._sheet = parser.parseString(''.join(css_list))
+        return self._sheet
     
     def _apply_rules(self):
         for item in self._sheet.cssRules:
@@ -31,13 +32,9 @@ class InlineStyler(object):
                 current_styles = filter(None, current_styles)
                 element['style'] = ';'.join(current_styles)
         return self._soup
-
-def do_work(html):
-    """
-    temporary function
-    """
-    print html
-    soup_doc, style_innards = strip_style_information(html)
-    sheet = parse_css(style_innards)
-    s = apply_rules(soup_doc, sheet)
-    print str(s)
+    
+    def convert(self):
+        css_list = self._strip_styles()
+        self._load_sheet(css_list)
+        html = _apply_rules()
+        return str(html)
