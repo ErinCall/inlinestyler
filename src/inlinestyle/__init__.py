@@ -1,6 +1,7 @@
 from BeautifulSoup import BeautifulSoup as Soup
 from soupselect import select
 import cssutils
+import re
 
 class InlineStyler(object):
     def __init__(self, html_string):
@@ -36,5 +37,10 @@ class InlineStyler(object):
     def convert(self):
         css_list = self._strip_styles()
         self._load_sheet(css_list)
-        html = _apply_rules()
+        html = self._apply_rules()
         return str(html)
+
+def remove_whitepace(input_string):
+    import string
+    filtered_string = filter(lambda x: x not in string.whitespace, input_string)
+    return filtered_string
