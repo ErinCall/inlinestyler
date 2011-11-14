@@ -23,15 +23,16 @@ class InlineStyler(object):
     
     def _apply_rules(self):
         for item in self._sheet.cssRules:
-            selector = item.selectorText
-            items = select(self._soup, selector)
-            for element in items:
-                styles = item.style.cssText.splitlines()
-                new_styles = [style.replace(';','') for style in styles]
-                current_styles = element.get('style','').split(';')
-                current_styles.extend(new_styles)
-                current_styles = filter(None, current_styles)
-                element['style'] = ';'.join(current_styles)
+            if item.type == item.STYLE_RULE:
+                selector = item.selectorText
+                items = select(self._soup, selector)
+                for element in items:
+                    styles = item.style.cssText.splitlines()
+                    new_styles = [style.replace(';','') for style in styles]
+                    current_styles = element.get('style','').split(';')
+                    current_styles.extend(new_styles)
+                    current_styles = filter(None, current_styles)
+                    element['style'] = ';'.join(current_styles)
         return self._soup
     
     def convert(self):
