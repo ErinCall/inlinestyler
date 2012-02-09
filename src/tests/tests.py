@@ -1,5 +1,6 @@
 from inlinestyle import InlineStyler, remove_whitepace
 import os.path
+from nose.tools import eq_
 
 class TestCase(object):
     def setup(self):
@@ -37,3 +38,8 @@ class TestCase(object):
         new_html = styler.convert()
         assert new_html
         assert False, 'not yet implemented'
+
+    def test_handles_documents_with_an_empty_style_tag(self):
+        styler = InlineStyler('<style></style>')
+        new_html = styler.convert()
+        eq_(new_html, '')
