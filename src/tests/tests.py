@@ -1,7 +1,11 @@
 from inlinestyle import InlineStyler, remove_whitepace
+import os.path
+
 class TestCase(object):
     def setup(self):
-        f = open('tests/test.html','r')
+        test_path = os.path.dirname(__file__)
+        test_html_file = os.path.join(test_path, 'test.html')
+        f = open(test_html_file,'r')
         self.html = f.read()
         f.close()
     
