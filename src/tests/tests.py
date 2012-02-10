@@ -33,11 +33,36 @@ class TestCase(object):
         string = ''.join(css_list)
         assert False, 'not yet implemented'
 
-    def test_convert(self):
+
+class Conversion(TestCase):
+    def test_integration(self):
         styler = InlineStyler(self.html)
         new_html = styler.convert()
-        assert new_html
-        assert False, 'not yet implemented'
+        eq_(new_html, """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>untitled</title>
+
+
+</head>
+
+<body class="body" style="background: #000;color: #FFF;font-size: 10px">
+    Body text
+    <div class="div" style="font-weight: bold;background: #fff;color: #000">
+        div text
+    </div>
+<div style="font-weight: bold">
+        empty div
+    </div>
+
+<p class="p" style="background: #fff;color: #000">
+        p text
+    </p>
+</body>
+</html>
+""")
 
     def test_handles_documents_with_an_empty_style_tag(self):
         styler = InlineStyler('<style></style>')
