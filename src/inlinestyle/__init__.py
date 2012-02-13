@@ -12,7 +12,8 @@ class InlineStyler(object):
         style_blocks = self._soup.findAll('style')
         css_list = []
         for style_block in style_blocks:
-            css_list.append(style_block.contents[0])
+            if style_block.contents:
+                css_list.append(style_block.contents[0])
             style_block.extract()
         return css_list
     
