@@ -39,7 +39,7 @@ class InlineStyler(object):
 
         return self._soup
 
-    def convert(self, remove_class=False):
+    def convert(self, remove_class=False, remove_id=False):
         css_list = self._strip_styles()
         self._load_sheet(css_list)
         html = self._apply_rules()
@@ -50,6 +50,15 @@ class InlineStyler(object):
                 new_attrs = []
                 for attr in element.attrs:
                     if attr[0] != 'class':
+                        new_attrs.append(attr)
+                element.attrs = new_attrs
+
+        if remove_id:
+            for element in html.findAll(True, attrs={
+                "id": re.compile(".*")}):
+                new_attrs = []
+                for attr in element.attrs:
+                    if attr[0] != 'id':
                         new_attrs.append(attr)
                 element.attrs = new_attrs
 

@@ -89,3 +89,8 @@ class TestConversion(TestCase):
         styler = InlineStyler('<style></style><div class="test">test</div>')
         new_html = styler.convert(remove_class=True)
         eq_(new_html, '<div>test</div>')
+
+    def test_remove_id_attribute(self):
+        styler = InlineStyler('<style></style><div id="test">test</div>')
+        new_html = styler.convert(remove_id=True)
+        eq_(new_html, '<div>test</div>')
