@@ -15,25 +15,29 @@ class TestCase(object):
         css_list = styler._strip_styles()
         eq_(len(css_list), 4)
 
+    '''
     def test_style_application(self):
         assert False, 'not yet implemented'
 
     def test_conversion(self):
         assert False, 'not yet implemented'
+    '''
 
     def test_remove_whitepace(self):
         inpt = 'body{\r\ntest}\t '
         string2 = remove_whitepace(inpt)
         eq_(string2, 'body{test}')
 
+    '''
     def test_css_load(self):
         styler = InlineStyler(self.html)
         css_list = styler._strip_styles()
         string = ''.join(css_list)
         assert False, 'not yet implemented'
+    '''
 
 
-class Conversion(TestCase):
+class TestConversion(TestCase):
     def test_integration(self):
         styler = InlineStyler(self.html)
         new_html = styler.convert()
@@ -67,3 +71,26 @@ class Conversion(TestCase):
         styler = InlineStyler('<style></style>')
         new_html = styler.convert()
         eq_(new_html, '')
+
+    def test_handles_multiple_classes(self):
+        html = """
+            <style>
+                div.class1.class2 {
+                    color: red;
+                }
+            </style>
+            <div class="class1 class2">stuff</div>
+        """
+        styler = InlineStyler(html)
+        new_html = styler.convert()
+        eq_(new_html.strip(), '<div class="class1 class2" style="color: red">stuff</div>')
+
+    def test_remove_class_attribute(self):
+        styler = InlineStyler('<style></style><div class="test">test</div>')
+        new_html = styler.convert(remove_class=True)
+        eq_(new_html, '<div>test</div>')
+
+    def test_remove_id_attribute(self):
+        styler = InlineStyler('<style></style><div id="test">test</div>')
+        new_html = styler.convert(remove_id=True)
+        eq_(new_html, '<div>test</div>')
