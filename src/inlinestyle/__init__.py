@@ -19,7 +19,7 @@ class InlineStyler(object):
 
     def _load_sheet(self, css_list):
         parser = cssutils.CSSParser()
-        self._sheet = parser.parseString(''.join(css_list))
+        self._sheet = parser.parseString(u''.join(css_list))
         return self._sheet
 
     def _apply_rules(self):
@@ -30,12 +30,12 @@ class InlineStyler(object):
 
                 for element in items:
                     styles = item.style.cssText.splitlines()
-                    new_styles = [style.replace(';','') for style in styles]
+                    new_styles = [style.replace(';',u'') for style in styles]
 
-                    current_styles = element.get('style','').split(';')
+                    current_styles = element.get('style',u'').split(';')
                     current_styles.extend(new_styles)
                     current_styles = filter(None, current_styles)
-                    element['style'] = ';'.join(current_styles)
+                    element['style'] = u';'.join(current_styles)
 
         return self._soup
 
@@ -62,7 +62,7 @@ class InlineStyler(object):
                         new_attrs.append(attr)
                 element.attrs = new_attrs
 
-        return str(html)
+        return unicode(html)
 
 def remove_whitepace(input_string):
     import string
