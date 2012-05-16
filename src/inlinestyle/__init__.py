@@ -30,7 +30,8 @@ class InlineStyler(object):
 
                 for element in items:
                     styles = item.style.cssText.splitlines()
-                    new_styles = [style.replace(';',u'') for style in styles]
+                    new_styles = [style.replace(';',u'').replace('"', u"'")
+                                  for style in styles]
 
                     current_styles = element.get('style',u'').split(';')
                     current_styles.extend(new_styles)
