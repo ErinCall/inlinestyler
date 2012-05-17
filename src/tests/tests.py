@@ -53,10 +53,10 @@ class TestConversion(TestCase):
 
 <body class="body" style="background: #000;color: #FFF;font-size: 10px">
     Body text
-    <div class="div" style="font-weight: bold;background: #fff;color: #000">
+    <div class="div" style="font-weight: bold;font-family: 'Courier New';background: #fff;color: #000">
         div text
     </div>
-<div style="font-weight: bold">
+<div style="font-weight: bold;font-family: 'Courier New'">
         empty div
     </div>
 
