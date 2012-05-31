@@ -85,6 +85,25 @@ class TestConversion(TestCase):
         new_html = styler.convert()
         eq_(new_html.strip(), '<div class="class1 class2" style="color: red">stuff</div>')
 
+    def test_handles_comma_separated_classes(self):
+        html = u"""
+            <style>
+                .noise-class, .target {
+                    background-color: #FF00FF
+                }
+            </style>
+            <div class="target">
+            </div>
+        """
+        expected_html = u"""
+
+<div class="target" style="background-color: #F0F">
+</div>
+"""
+        styler = InlineStyler(html)
+        new_html = styler.convert()
+        eq_(expected_html, new_html)
+
     def test_remove_class_attribute(self):
         styler = InlineStyler('<style></style><div class="test">test</div>')
         new_html = styler.convert(remove_class=True)
