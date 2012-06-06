@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup as Soup
+from bs4 import BeautifulSoup as Soup
 from soupselect import select
 import cssutils
 import re
