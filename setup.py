@@ -5,4 +5,4 @@ setup(name="inlinestyle",
       description="convert html style blocks to inline style statements",
       author="Matt George",
       author_email="mgeorge@gmail.com",
-      install_requires=["beautifulsoup", "nose", "cssutils"])
+      install_requires=["beautifulsoup4", "nose", "cssutils"])
